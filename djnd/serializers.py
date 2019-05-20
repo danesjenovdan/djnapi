@@ -13,6 +13,9 @@ class VideoSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 class ClipSerializer(TaggitSerializer, serializers.ModelSerializer):
   tags = TagListSerializerField()
+  languages = TagListSerializerField()
+  formats = TagListSerializerField()
+  types = TagListSerializerField()
 
   class Meta:
     model = Clip
