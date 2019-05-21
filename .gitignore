@@ -62,3 +62,6 @@ target/
 
 # sqlite
 *.sqlite3
+
+# vscode settings
+.vscode
