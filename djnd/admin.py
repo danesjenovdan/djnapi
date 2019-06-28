@@ -5,21 +5,30 @@ from adminsortable2.admin import SortableAdminMixin
 
 from djnd.models import Video, Project, Clip, InfoPush
 
-# Register your models here.
+
 class VideoAdmin(SortableAdminMixin, TranslatableAdmin):
   inlines = [TranslationInline,]
   list_display = ['title', 'date',]
-  list_filter = ['tags',]
+  list_filter = [
+    ('tags', admin.RelatedOnlyFieldListFilter),
+  ]
 
 class ProjectAdmin(SortableAdminMixin, TranslatableAdmin):
   inlines = [TranslationInline,]
   list_display = ['title', 'date',]
-  list_filter = ['tags',]
+  list_filter = [
+    ('tags', admin.RelatedOnlyFieldListFilter),
+  ]
 
 class ClipAdmin(SortableAdminMixin, TranslatableAdmin):
   inlines = [TranslationInline,]
   list_display = ['title', 'publisher', 'date',]
-  list_filter = ['tags', 'languages', 'formats', 'types',]
+  list_filter = [
+    ('tags', admin.RelatedOnlyFieldListFilter),
+    ('languages', admin.RelatedOnlyFieldListFilter),
+    ('formats', admin.RelatedOnlyFieldListFilter),
+    ('types', admin.RelatedOnlyFieldListFilter),
+  ]
 
 class InfoPushAdmin(TranslatableAdmin):
   inlines = [TranslationInline,]
