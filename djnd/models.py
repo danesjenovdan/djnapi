@@ -100,6 +100,7 @@ class Clip(Translatable):
   languages = TaggableManager(through=TaggedLanguageItem, blank=True, verbose_name='Language tags')
   formats = TaggableManager(through=TaggedFormatItem, blank=True, verbose_name='Format tags')
   types = TaggableManager(through=TaggedTypeItem, blank=True, verbose_name='Type tags')
+  url = models.URLField(blank=True, null=True)
   
   class TranslatableMeta:
     fields = ['title', 'desc']
