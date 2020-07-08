@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 
 from rest_framework import viewsets, filters
@@ -6,6 +7,16 @@ from taggit.forms import TagField
 
 from .models import Video, Project, Clip, InfoPush
 from .serializers import VideoSerializer, ProjectSerializer, ClipSerializer, InfoPushSerializer
+
+
+# Valid languages from settings
+VALID_LANGS = list(map(lambda x: x[0], settings.LANGUAGES))
+
+def get_lang(request):
+    lang = request.query_params.get('lang', 'sl')
+    if lang not in VALID_LANGS:
+        lang = 'sl'
+    return lang
 
 
 # FILTERS
@@ -52,6 +63,9 @@ class VideoViewSet(viewsets.ModelViewSet):
     ordering_fields = ('order', 'date',)
     ordering = ('order',)
 
+    def get_queryset(self):
+        return super().get_queryset().translate(get_lang(self.request))
+
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data.update({
@@ -68,6 +82,9 @@ class ProjectViewSet(viewsets.ModelViewSet):
     filterset_class = ProjectFilterSet
     ordering_fields = ('order', 'date',)
     ordering = ('order',)
+
+    def get_queryset(self):
+        return super().get_queryset().translate(get_lang(self.request))
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -86,6 +103,9 @@ class ClipViewSet(viewsets.ModelViewSet):
     ordering_fields = ('order', 'date',)
     ordering = ('order',)
 
+    def get_queryset(self):
+        return super().get_queryset().translate(get_lang(self.request))
+
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data.update({
@@ -101,3 +121,6 @@ class ClipViewSet(viewsets.ModelViewSet):
 class InfoPushViewSet(viewsets.ModelViewSet):
     queryset = InfoPush.objects.all()
     serializer_class = InfoPushSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().translate(get_lang(self.request))
