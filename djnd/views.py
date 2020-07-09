@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.shortcuts import render
+from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend, Filter, FilterSet
 from taggit.forms import TagField
+from translations.models import Translation
 
 from .models import Video, Project, Clip, InfoPush
 from .serializers import VideoSerializer, ProjectSerializer, ClipSerializer, InfoPushSerializer
@@ -17,6 +19,14 @@ def get_lang(request):
     if lang not in VALID_LANGS:
         lang = 'sl'
     return lang
+
+
+def filter_translated(qs, lang):
+    if lang == 'sl':
+        return qs
+    ct = ContentType.objects.get_for_model(qs.model)
+    t_ids = Translation.objects.filter(content_type=ct, language=lang).order_by().values_list('object_id', flat=True).distinct()
+    return qs.filter(id__in=t_ids).translate(lang)
 
 
 # FILTERS
@@ -64,7 +74,7 @@ class VideoViewSet(viewsets.ModelViewSet):
     ordering = ('order',)
 
     def get_queryset(self):
-        return super().get_queryset().translate(get_lang(self.request))
+        return filter_translated(super().get_queryset(), get_lang(self.request))
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -84,7 +94,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     ordering = ('order',)
 
     def get_queryset(self):
-        return super().get_queryset().translate(get_lang(self.request))
+        return filter_translated(super().get_queryset(), get_lang(self.request))
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -104,7 +114,7 @@ class ClipViewSet(viewsets.ModelViewSet):
     ordering = ('order',)
 
     def get_queryset(self):
-        return super().get_queryset().translate(get_lang(self.request))
+        return filter_translated(super().get_queryset(), get_lang(self.request))
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -123,4 +133,4 @@ class InfoPushViewSet(viewsets.ModelViewSet):
     serializer_class = InfoPushSerializer
 
     def get_queryset(self):
-        return super().get_queryset().translate(get_lang(self.request))
+        return filter_translated(super().get_queryset(), get_lang(self.request))
