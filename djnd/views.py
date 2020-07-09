@@ -114,7 +114,8 @@ class ClipViewSet(viewsets.ModelViewSet):
     ordering = ('order',)
 
     def get_queryset(self):
-        return filter_translated(super().get_queryset(), get_lang(self.request))
+        return super().get_queryset().translate(get_lang(self.request))
+        # return filter_translated(super().get_queryset(), get_lang(self.request))
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
