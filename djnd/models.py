@@ -56,6 +56,7 @@ class TaggedTypeItem(GenericTaggedItemBase):
 class Video(Translatable):
   title = models.CharField(max_length=512)
   desc = models.TextField(blank=True, null=True, verbose_name='Description')
+  alt = models.TextField(blank=True, null=True)
   url = models.URLField(blank=True, null=True, verbose_name='URL')
   date = models.DateField(blank=True, null=True)
   order = models.IntegerField(default=0, blank=False, null=False)
@@ -117,6 +118,7 @@ class Clip(Translatable):
 class InfoPush(Translatable):
   title = models.CharField(max_length=512)
   desc = models.TextField(blank=True, null=True, verbose_name='Description')
+  alt = models.TextField(blank=True, null=True)
   cta_text = models.CharField(max_length=512, verbose_name='Button text')
   cta_url = models.URLField(verbose_name='Button URL')
   visible = models.BooleanField(default=False)

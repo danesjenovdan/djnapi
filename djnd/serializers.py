@@ -9,7 +9,7 @@ class VideoSerializer(TaggitSerializer, serializers.ModelSerializer):
 
   class Meta:
     model = Video
-    fields = ('title', 'desc', 'url', 'date', 'image', 'tags', 'order')
+    fields = ('title', 'desc','alt',  'url', 'date', 'image', 'tags', 'order')
 
 class ClipSerializer(TaggitSerializer, serializers.ModelSerializer):
   tags = TagListSerializerField()
@@ -31,4 +31,4 @@ class ProjectSerializer(TaggitSerializer, serializers.ModelSerializer):
 class InfoPushSerializer(TaggitSerializer, serializers.ModelSerializer):
   class Meta:
     model = InfoPush
-    fields = ('title', 'desc', 'cta_text', 'cta_url', 'visible', 'image')
+    fields = ('title', 'desc', 'alt', 'cta_text', 'cta_url', 'visible', 'image')
