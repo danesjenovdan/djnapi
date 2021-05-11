@@ -9,7 +9,7 @@ class VideoSerializer(TaggitSerializer, serializers.ModelSerializer):
 
   class Meta:
     model = Video
-    fields = ('title', 'desc','alt',  'url', 'date', 'image', 'tags', 'order')
+    fields = ('title', 'desc', 'alt', 'url', 'date', 'image', 'tags', 'order')
 
 class ClipSerializer(TaggitSerializer, serializers.ModelSerializer):
   tags = TagListSerializerField()
