@@ -73,6 +73,7 @@ class Video(Translatable):
 
 class Project(Translatable):
   title = models.CharField(max_length=512)
+  alt = models.TextField(blank=True, null=True)
   desc = models.TextField(blank=True, null=True, verbose_name='Description')
   date = models.DateField(blank=True, null=True)
   order = models.IntegerField(default=0, blank=False, null=False)
@@ -92,6 +93,7 @@ class Project(Translatable):
 class Clip(Translatable):
   title = models.CharField(max_length=512)
   desc = models.TextField(blank=True, null=True, verbose_name='Description')
+  alt = models.TextField(blank=True, null=True)
   date = models.DateField(blank=True, null=True)
   order = models.IntegerField(default=0, blank=False, null=False)
   publisher = models.CharField(max_length=512)

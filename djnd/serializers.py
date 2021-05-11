@@ -19,14 +19,14 @@ class ClipSerializer(TaggitSerializer, serializers.ModelSerializer):
 
   class Meta:
     model = Clip
-    fields = ('title', 'desc', 'publisher', 'url', 'date', 'image', 'tags', 'languages', 'formats', 'types', 'order')
+    fields = ('title', 'alt', 'desc', 'publisher', 'url', 'date', 'image', 'tags', 'languages', 'formats', 'types', 'order')
 
 class ProjectSerializer(TaggitSerializer, serializers.ModelSerializer):
   tags = TagListSerializerField()
 
   class Meta:
     model = Project
-    fields = ('title', 'desc', 'url', 'date', 'image', 'tags')
+    fields = ('title', 'alt', 'desc', 'url', 'date', 'image', 'tags')
 
 class InfoPushSerializer(TaggitSerializer, serializers.ModelSerializer):
   class Meta:
